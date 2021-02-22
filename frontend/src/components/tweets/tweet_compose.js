@@ -27,7 +27,7 @@ class TweetCompose extends React.Component {
         this.setState({text: ''})
     }
 
-    updata() {
+    update() {
         return e => this.setState({
             text: e.currentTarget.value
         });

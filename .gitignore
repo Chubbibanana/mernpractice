@@ -32,6 +32,7 @@ node_modules/
 jspm_packages/
 # Keys for server
 config/keys.js
+config/keys_dev.js
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 # TypeScript cache

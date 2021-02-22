@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 
-const Tweet = require('../../validation/tweets');
+const Tweet = require('../../models/Tweet');
 const validateTweetInput = require('../../validation/tweets');
 
 router.get('/', (req, res) => {
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
         .catch(err => res.status(404).json({ notweetsfound: 'No tweets found'}));
 });
 
-router.get('user/:user_id', (req, res) => {
+router.get('/user/:user_id', (req, res) => {
     Tweet.find({user: req.params.user_id})
         .then(tweets => res.json(tweets))
         .catch(err => 
@@ -40,7 +40,7 @@ router.post('/',
             text: req.body.text,
             user: req.user.id
         });
-
+        debugger
         newTweet.save().then(tweet => res.json(tweet));
     }
     
