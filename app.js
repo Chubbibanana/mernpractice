@@ -6,8 +6,14 @@ const tweets = require("./routes/api/tweets");
 const passport = require('passport');
 const app = express();
 const path = require('path');
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('frontend/build'));
+    app.get('/', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+    })
+}
 
-const db = require('./config/keys').mongoURI;
+const db = require('./config/keys_prod').mongoURI;
 mongoose
     .connect(db, { useNewUrlParser: true})
     .then(() => console.log("Connected to MongoDB successfully"))
@@ -19,12 +25,6 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('frontend/build'));
-    app.get('/', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-    })
-}
 
 const port = process.env.PORT || 5000;
 
